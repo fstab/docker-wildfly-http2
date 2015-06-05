@@ -9,7 +9,7 @@ function wait_until_wildfly_started {
     done
     while read LOGLINE
     do
-        if [[ "${LOGLINE}" == *"WildFly Web Lite 9.0.0.Beta1 (WildFly Core 1.0.0.Beta2) started"* ]]
+        if [[ "${LOGLINE}" == *"WildFly Full 9.0.0.Beta1 (WildFly Core 1.0.0.Beta2) started"* ]]
         then
             break
         fi
@@ -28,7 +28,10 @@ cli "--command=/core-service=management/security-realm=https/authentication=trus
 cli "--command=/core-service=management/security-realm=https/server-identity=ssl:add(keystore-path=server.keystore, keystore-password=password, keystore-relative-to=jboss.server.config.dir)"
 cli "--command=/subsystem=undertow/server=default-server/https-listener=https:add(socket-binding=https, security-realm=https, enable-http2=true)"
 cli "--command=/interface=public/:write-attribute(name=inet-address,value=0.0.0.0)"
-cli "--command=/:reload"
+cli "--command=/interface=management/:write-attribute(name=inet-address,value=0.0.0.0)"
+cli "--command=/:shutdown"
 
-wait_until_wildfly_started
-echo HTTPS connector started on port 8443
+# Wildfly9.0.0.Beta1 seems to have some problem with wrong <aliases> tags. Fix this.
+
+cp standalone/configuration/standalone.xml standalone/configuration/standalone.xml.bak
+cat standalone/configuration/standalone.xml.bak | grep -v '<aliases>' > standalone/configuration/standalone.xml
