@@ -10,7 +10,7 @@ In addition to enabling HTTP/2 on port `8443`, the image also enables the admin 
 How To Run
 ----------
 
-The image is available on [Docker Hub](https://registry.hub.docker.com/u/fstab/wildfly-http2), and can be downloaded and run with a single `docker` command.
+The image is available on [Docker Hub](https://registry.hub.docker.com/u/fstab/wildfly-http2), and can be downloaded and run with a single command.
 
 On Linux, run it as folows:
 
