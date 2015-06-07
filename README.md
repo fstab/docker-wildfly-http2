@@ -3,14 +3,14 @@ docker-wildfly-http2
 
 [Wildfly](http://wildfly.org) 9.0.0.Beta1 with HTTP/2 support, as described here: http://undertow.io/blog/2015/03/26/HTTP2-In-Wildfly.html
 
-This image was used for the first example in the [HTTP/2 blog](http://fstab.github.io/h2c/).
+This image is used for the first example in my [HTTP/2 blog](http://fstab.github.io/h2c/).
 
 In addition to enabling HTTP/2 on port `8443`, the image also enables the admin console on port `9990`, accessable with username _admin_ and password _admin_.
 
 How To Run
 ----------
 
-The image can be run directly from [Docker Hub](https://registry.hub.docker.com/u/fstab/wildfly-http2).
+The image is available on [Docker Hub](https://registry.hub.docker.com/u/fstab/wildfly-http2), and can be downloaded and run with a single `docker` command.
 
 On Linux, run it as folows:
 
@@ -23,8 +23,6 @@ If you are using [boot2docker](http://boot2docker.io) on Windows or Mac, you nee
 ```bash
 docker run -t -p 8443:8443 -p 9990:9990 -i fstab/wildfly-http2:9.0.0.Beta1
 ```
-
-In order to find out the IP address
 
 Wildfly becomes available on [https://IP_ADDRESS:8443](https://XXX.XXX.XXX.XXX:8443) where _IP_ADDRESS_ depends on if you are using boot2docker or not.
 
