@@ -81,4 +81,4 @@ USER wildfly
 WORKDIR /home/wildfly/wildfly-9.0.1.Final
 RUN bash -c '/home/wildfly/add-https-connector.sh & ./bin/standalone.sh'
 RUN mv /home/wildfly/wildfly-9.0.1.Final/standalone/configuration/standalone_xml_history/current /home/wildfly/wildfly-9.0.1.Final/standalone/configuration/standalone_xml_history/DOCKER-BUILD
-#ENTRYPOINT bash -c './bin/standalone.sh'
+ENTRYPOINT bash -c './bin/standalone.sh'
