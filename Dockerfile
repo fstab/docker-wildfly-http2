@@ -48,24 +48,24 @@ RUN adduser --disabled-login --gecos '' wildfly
 
 # Install Wildfly in /home/wildfly
 WORKDIR /home/wildfly
-RUN wget http://download.jboss.org/wildfly/9.0.0.Beta1/wildfly-9.0.0.Beta1.tar.gz && \
-    tar xfz wildfly-9.0.0.Beta1.tar.gz
-ENV JBOSS_HOME=/home/wildfly/wildfly-9.0.0.Beta1
+RUN wget http://download.jboss.org/wildfly/9.0.1.Final/wildfly-9.0.1.Final.tar.gz && \
+    tar xfz wildfly-9.0.1.Final.tar.gz
+ENV JBOSS_HOME=/home/wildfly/wildfly-9.0.1.Final
 
 # fake certification for testing
-WORKDIR /home/wildfly/wildfly-9.0.0.Beta1/standalone/configuration
+WORKDIR /home/wildfly/wildfly-9.0.1.Final/standalone/configuration
 RUN \
     wget https://raw.githubusercontent.com/undertow-io/undertow/master/core/src/test/resources/server.keystore && \
     wget https://raw.githubusercontent.com/undertow-io/undertow/master/core/src/test/resources/server.truststore
 
 # alpn
-WORKDIR /home/wildfly/wildfly-9.0.0.Beta1/bin
+WORKDIR /home/wildfly/wildfly-9.0.1.Final/bin
 RUN \
     wget http://central.maven.org/maven2/org/mortbay/jetty/alpn/alpn-boot/8.1.3.v20150130/alpn-boot-8.1.3.v20150130.jar && \
-    echo 'JAVA_OPTS="$JAVA_OPTS' " -Xbootclasspath/p:$JBOSS_HOME/bin/alpn-boot-8.1.3.v20150130.jar" '"' >> /home/wildfly/wildfly-9.0.0.Beta1/bin/standalone.conf
+    echo 'JAVA_OPTS="$JAVA_OPTS' " -Xbootclasspath/p:$JBOSS_HOME/bin/alpn-boot-8.1.3.v20150130.jar" '"' >> /home/wildfly/wildfly-9.0.1.Final/bin/standalone.conf
 
 # configure management user
-WORKDIR /home/wildfly/wildfly-9.0.0.Beta1/standalone/configuration
+WORKDIR /home/wildfly/wildfly-9.0.1.Final/standalone/configuration
 RUN \
     echo                                          >> mgmt-users.properties && \
     echo '# username: admin, password: admin'     >> mgmt-users.properties && \
@@ -75,8 +75,10 @@ RUN \
 
 ADD add-https-connector.sh /home/wildfly/add-https-connector.sh
 RUN \
-    chown -R wildfly.wildfly /home/wildfly/wildfly-9.0.0.Beta1 && \
+    chown -R wildfly.wildfly /home/wildfly/wildfly-9.0.1.Final && \
     chown wildfly.wildfly /home/wildfly/add-https-connector.sh
 USER wildfly
-WORKDIR /home/wildfly/wildfly-9.0.0.Beta1
-ENTRYPOINT bash -c '/home/wildfly/add-https-connector.sh & ./bin/standalone.sh ; ./bin/standalone.sh'
+WORKDIR /home/wildfly/wildfly-9.0.1.Final
+RUN bash -c '/home/wildfly/add-https-connector.sh & ./bin/standalone.sh'
+RUN mv /home/wildfly/wildfly-9.0.1.Final/standalone/configuration/standalone_xml_history/current /home/wildfly/wildfly-9.0.1.Final/standalone/configuration/standalone_xml_history/DOCKER-BUILD
+#ENTRYPOINT bash -c './bin/standalone.sh'

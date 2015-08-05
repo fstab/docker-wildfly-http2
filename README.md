@@ -1,7 +1,7 @@
 docker-wildfly-http2
 ====================
 
-[Wildfly](http://wildfly.org) 9.0.0.Beta1 with HTTP/2 support, as described here: http://undertow.io/blog/2015/03/26/HTTP2-In-Wildfly.html
+[Wildfly](http://wildfly.org) 9.0.1.Final with HTTP/2 support, as described here: http://undertow.io/blog/2015/03/26/HTTP2-In-Wildfly.html
 
 This image is used for the first example in my [HTTP/2 blog](http://fstab.github.io/h2c/).
 
@@ -15,13 +15,13 @@ The image is available on [Docker Hub](https://registry.hub.docker.com/u/fstab/w
 On Linux, run it as folows:
 
 ```bash
-docker run -t -i fstab/wildfly-http2:9.0.0.Beta1
+docker run -t -i fstab/wildfly-http2:9.0.1.Final
 ```
 
 If you are using [boot2docker](http://boot2docker.io) on Windows or Mac, you need additional parameters to publish the ports on the boot2docker VM:
 
 ```bash
-docker run -t -p 8443:8443 -p 9990:9990 -i fstab/wildfly-http2:9.0.0.Beta1
+docker run -t -p 8443:8443 -p 9990:9990 -i fstab/wildfly-http2:9.0.1.Final
 ```
 
 Wildfly becomes available on [https://IP_ADDRESS:8443](https://XXX.XXX.XXX.XXX:8443) where _IP_ADDRESS_ depends on if you are using boot2docker or not.
@@ -45,5 +45,5 @@ Building the Docker Image from Source
     
     ```bash
     cd docker-wildfly-http2
-    docker build -t="fstab/wildfly-http2:9.0.0.Beta1" .
+    docker build -t="fstab/wildfly-http2:9.0.1.Final" .
     ```
